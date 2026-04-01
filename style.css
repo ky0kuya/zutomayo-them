@@ -1,0 +1,107 @@
+:root { --purple: #7000cc; --green: #00ff41; --text: #e0e0e0; }
+
+body { 
+    margin: 0; background-color: #050505; background-repeat: no-repeat; background-position: center center; background-attachment: fixed; background-size: cover; 
+    font-family: 'VT323', 'Courier New', monospace; 
+    color: var(--text); overflow: hidden; user-select: none; 
+}
+body::before { content: ""; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.5); z-index: 0; pointer-events: none; }
+
+/* 开机 */
+#boot-screen { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #000; z-index: 9999; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+.glitch-text { font-size: 3.5rem; color: var(--green); text-shadow: 3px 3px var(--purple); letter-spacing: 2px; }
+.pixel-jp { font-family: 'DotGothic16', 'Zen Kaku Gothic New', sans-serif; font-size: 4rem; letter-spacing: 4px; }
+.loader-bar { width: 300px; height: 10px; border: 1px solid var(--green); margin-top: 20px; }
+.bar-fill { height: 100%; background: var(--green); width: 0%; animation: load 2s forwards; }
+@keyframes load { to { width: 100%; } }
+.crt-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(18, 16, 16, 0.1); pointer-events: none; z-index: 900; }
+.scanlines { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(rgba(18,16,16,0) 50%, rgba(0,0,0,0.25) 50%); background-size: 100% 4px; pointer-events: none; z-index: 901; }
+
+/* 资源管理器样式 */
+.explorer-toolbar { display: flex; align-items: center; padding: 5px; background: #222; border-bottom: 2px solid #555; gap: 5px; }
+.nav-btn { background: #000; color: #fff; border: 1px solid #555; cursor: pointer; width: 30px; }
+.address-bar { flex-grow: 1; display: flex; background: #000; border: 1px solid #555; padding: 2px 5px; align-items: center; }
+.address-bar .prompt { color: var(--green); margin-right: 5px; font-weight: bold; }
+.address-bar input { background: transparent; border: none; color: var(--text); width: 100%; font-family: inherit; font-size: 1.1rem; outline: none; }
+.search-box input { background: #000; border: 1px solid #555; color: #fff; font-family: inherit; padding: 2px 5px; width: 150px; }
+.explorer-body { display: flex; height: calc(100% - 70px); }
+.explorer-sidebar { width: 200px; background: #111; border-right: 2px solid #555; padding: 10px 0; overflow-y: auto; display: flex; flex-direction: column; }
+.sidebar-item { padding: 5px 10px; cursor: pointer; color: #aaa; display: flex; align-items: center; }
+.sidebar-item:hover, .sidebar-item.active { background: var(--purple); color: #fff; }
+.sidebar-item .icon { margin-right: 8px; }
+.sidebar-divider { font-size: 0.8rem; color: #555; padding: 10px 10px 5px; font-weight: bold; }
+.explorer-main { flex-grow: 1; display: flex; flex-direction: column; background: #050505; }
+.file-header { display: flex; padding: 5px 10px; background: #222; border-bottom: 1px solid #555; font-size: 0.9rem; color: #888; }
+.file-list-container { overflow-y: auto; flex-grow: 1; padding: 5px; }
+.file-row { display: flex; padding: 5px 10px; cursor: pointer; border-bottom: 1px dotted #222; color: var(--text); align-items: center; }
+.file-row:hover { background: rgba(0, 255, 65, 0.1); color: var(--green); }
+.file-name { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.f-icon { margin-right: 5px; color: var(--purple); }
+.file-date, .file-size { color: #666; font-size: 0.9rem; }
+.explorer-statusbar { height: 25px; background: #222; border-top: 2px solid #555; display: flex; align-items: center; padding: 0 10px; font-size: 0.9rem; color: #888; gap: 20px; }
+
+/* Walkman 样式 */
+.rack-title { color: var(--green); margin-bottom: 10px; font-weight: bold; }
+.tape-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(110px, 1fr)); gap: 15px; padding: 10px; max-height: 400px; overflow-y: auto; }
+.cassette-tape { width: 100%; height: 70px; background: #222; border: 2px solid #555; border-radius: 5px; cursor: pointer; position: relative; overflow: hidden; transition: 0.2s; box-shadow: inset 0 0 10px #000; display: flex; align-items: center; justify-content: center; }
+.cassette-tape:hover { border-color: var(--purple); box-shadow: 0 0 10px var(--purple); transform: scale(1.05); }
+.tape-body { width: 90%; height: 80%; background: #1a1a1a; border-radius: 3px; display: flex; align-items: center; justify-content: space-between; padding: 0 5px; position: relative;}
+.tape-reel { width: 20px; height: 20px; background: #333; border-radius: 50%; border: 2px solid #555; }
+.tape-window { flex-grow: 1; margin: 0 5px; height: 60%; background: rgba(0,0,0,0.5); border: 1px solid #444; display: flex; align-items: center; justify-content: center; }
+.tape-title { font-size: 0.8rem; color: var(--green); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 70px; }
+.back-to-rack-btn { background: #333; color: #aaa; border: 1px solid #555; padding: 2px 5px; margin-bottom: 10px; cursor: pointer; font-family: inherit; width: 100%; }
+.back-to-rack-btn:hover { color: #fff; border-color: #fff; }
+.cassette-window { width: 100%; height: 120px; background: #1a1a1a; border: 3px solid #444; border-radius: 5px; position: relative; display: flex; align-items: center; justify-content: center; overflow: hidden; box-shadow: inset 0 0 20px #000; margin-bottom: 15px; }
+.cassette-window.playing .spool-teeth { animation: spin 2s linear infinite; }
+@keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+.tape-spool.left, .tape-spool.right { width: 60px; height: 60px; background: #222; border-radius: 50%; border: 3px solid #555; position: absolute; top: 50%; transform: translateY(-50%); display: flex; align-items: center; justify-content: center; }
+.tape-spool.left { left: 30px; } .tape-spool.right { right: 30px; }
+.spool-teeth { width: 100%; height: 100%; background: repeating-conic-gradient(#333 0 15deg, #555 15deg 30deg); border-radius: 50%; }
+.tape-label { z-index: 5; background: #111; padding: 2px 10px; border: 1px solid var(--purple); color: var(--green); font-size: 0.9rem; max-width: 120px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.tape-mechanism { position: absolute; bottom: 10px; width: 60%; height: 10px; background: #222; border: 1px solid #444; }
+.player-status { display: flex; justify-content: space-between; margin-bottom: 10px; color: #666; font-size: 0.9rem; }
+.mech-counter { font-family: 'DotGothic16'; color: var(--green); letter-spacing: 2px; }
+.player-controls { display: flex; justify-content: center; gap: 10px; margin-bottom: 15px; }
+.ctrl-btn { width: 50px; height: 40px; background: #222; border: 2px solid #555; color: #888; font-size: 1.2rem; cursor: pointer; }
+.ctrl-btn:hover { border-color: var(--green); color: var(--green); }
+.play-btn { width: 60px; border-color: var(--purple); color: var(--purple); font-size: 1.5rem; }
+.play-btn:hover { background: var(--purple); color: #fff; }
+.volume-ctrl { font-size: 0.8rem; color: #666; display: flex; align-items: center; gap: 5px;}
+.volume-ctrl input { flex-grow: 1; accent-color: var(--purple); }
+
+/* 终端 & 代码 */
+.terminal-output { font-family: 'VT323', monospace; color: var(--green); margin-bottom: 10px; white-space: pre-wrap; line-height: 1.4; }
+.terminal-input-line { display: flex; color: var(--green); font-family: 'VT323', monospace; font-size: 1.2rem; align-items: center; }
+.terminal-prompt { margin-right: 10px; font-weight: bold; }
+.terminal-input { background: transparent; border: none; color: #fff; font-family: 'VT323', monospace; font-size: 1.2rem; flex-grow: 1; outline: none; caret-color: var(--green); }
+code[class*="language-"], pre[class*="language-"] { font-family: 'Consolas', monospace !important; font-size: 1rem; text-shadow: none; background: #1d1f21 !important; color: #c5c8c6 !important; }
+
+/* 图标与窗口通用 */
+.desktop-icons { position: absolute; top: 20px; left: 20px; z-index: 10; }
+.icon { width: 90px; text-align: center; margin-bottom: 30px; cursor: pointer; transition: 0.2s; }
+.icon:hover { transform: scale(1.1); text-shadow: 0 0 8px var(--green); }
+.icon span { background: rgba(0,0,0,0.7); padding: 2px 5px; border-radius: 4px; border: 1px solid #333; }
+.icon-img { font-size: 3.5rem; margin-bottom: 5px; filter: drop-shadow(0 0 5px var(--purple)); }
+.window { position: absolute; display: none; flex-direction: column; background: #111; border: 2px solid #a0a0a0; box-shadow: 10px 10px 0px #000; min-width: 300px; z-index: 20; }
+.win-header { background: var(--purple); padding: 5px 10px; cursor: grab; display: flex; justify-content: space-between; border-bottom: 2px solid #fff; user-select: none; }
+.win-title { font-weight: bold; color: #fff; letter-spacing: 1px; }
+.win-close { cursor: pointer; background: #c0c0c0; border: 1px solid #000; font-weight: bold; }
+.win-content { padding: 20px; overflow-y: auto; flex-grow: 1; user-select: text; }
+
+/* 扫雷 & 圣诞 */
+.mine-status-bar { display: flex; justify-content: space-between; width: 100%; margin-bottom: 10px; border-bottom: 1px dashed #333; padding-bottom: 5px; }
+.mine-stat { font-size: 1.5rem; color: var(--green); font-family: 'VT323'; width: 60px; text-align: center; }
+.mine-reset-btn { background: #333; color: #fff; border: 1px solid #fff; cursor: pointer; font-size: 1.5rem; padding: 0 10px; }
+.mine-grid { display: grid; grid-template-columns: repeat(10, 30px); grid-template-rows: repeat(10, 30px); gap: 1px; background: #555; border: 2px solid #555; margin: 0 auto; }
+.mine-cell { width: 30px; height: 30px; background: #222; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; cursor: pointer; color: #fff; user-select: none; }
+.mine-cell:hover { background: #333; } .mine-cell.revealed { background: #000; border: 1px dotted #333; } .mine-cell.flagged { color: red; } .mine-cell.mine-hit { background: red; } .mine-cell[data-num="1"] { color: #00ff41; } .mine-cell[data-num="2"] { color: #7000cc; } .mine-cell[data-num="3"] { color: yellow; }
+.mine-result { margin-top: 10px; font-size: 1.5rem; text-align: center; font-weight: bold; height: 25px; }
+.ascii-tree { font-family: 'VT323', monospace; font-size: 1.4rem; line-height: 1.1; color: var(--green); text-shadow: 0 0 5px var(--green); }
+.star { color: yellow; text-shadow: 0 0 10px yellow; animation: blink 1s infinite alternate; }
+.light { animation: blink 0.5s infinite; } .light.r { color: red; animation-delay: 0.1s; } .light.g { color: cyan; animation-delay: 0.3s; } .light.b { color: blue; animation-delay: 0.5s; } .light.y { color: orange; animation-delay: 0.7s; }
+@keyframes blink { 0% { opacity: 0.3; } 100% { opacity: 1; } }
+
+/* 任务栏 */
+.taskbar { position: fixed; bottom: 0; left: 0; width: 100%; height: 40px; background: rgba(192, 192, 192, 0.9); border-top: 2px solid #fff; z-index: 999; display: flex; align-items: center; padding: 0 10px; }
+.start-btn { background: #000; color: var(--green); padding: 5px 15px; border: 2px solid #808080; font-weight: bold; cursor: pointer; }
+.clock { margin-left: auto; color: #000; font-weight: bold; width: auto; padding-right: 15px; text-align: right; white-space: nowrap; font-size: 1.2rem; }
